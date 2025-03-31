@@ -4,6 +4,12 @@ import sys
 # Inicializa o Pygame
 pygame.init()
 
+# Inicializa o mixer de som
+pygame.mixer.init()
+
+# Carrega o som da risada
+laugh_sound = pygame.mixer.Sound("assets/sounds/child-haha-117044.mp3")
+
 # ----- Maze map -----
 # 1 = wall, 0 = path
 maze = [
@@ -17,6 +23,10 @@ maze = [
 # ----- Posição inicial do pai (jogador) -----
 player_x = 1  # coluna
 player_y = 1  # linha
+
+# Posição inicial da filha
+daughter_x = 3
+daughter_y = 3
 
 # Apenas para visualizar no terminal
 for row in maze:
@@ -76,9 +86,32 @@ while running:
         (player_x * block_size, player_y * block_size, block_size, block_size)
     )
 
+    # ----- Verifica colisão entre pai e filha -----
+    if player_x == daughter_x and player_y == daughter_y:
+        daughter_found = True
+        laugh_sound.play()  # toca só na primeira vez
+    else:
+        daughter_found = False
 
+    # ----- Desenha a filha (NPC) -----
+    daughter_color = (255, 100, 200)  # normal
+    if daughter_found:
+        daughter_color = (255, 255, 0)  # amarela, tipo "surpresa!"
+
+    pygame.draw.rect(
+        screen,
+        daughter_color,
+        (daughter_x * block_size, daughter_y * block_size, block_size, block_size)
+    )
+
+    if daughter_found:
+        font = pygame.font.SysFont(None, 36)
+        text = font.render("Haha! Te peguei!", True, (0, 0, 0))
+        screen.blit(text, (20, 20))
 
     pygame.display.flip()
+
+
     clock.tick(60)
 
 pygame.quit()
