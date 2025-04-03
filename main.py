@@ -2,6 +2,8 @@ import pygame
 import sys
 import random
 
+from corre_papai.maze import Maze
+
 # Inicializa o Pygame
 pygame.init()
 
@@ -13,15 +15,8 @@ try:
 except pygame.error:
     print("⚠️ Áudio não disponível. Rodando sem som.")
 
-# ----- Maze map -----
-# 1 = wall, 0 = path
-maze = [
-    [1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0, 1],
-    [1, 0, 1, 1, 0, 1],
-    [1, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1]
-]
+maze = Maze()
+grid = maze.get_grid()
 
 # ----- Posição inicial do pai (jogador) -----
 player_x = 1  # coluna
@@ -36,7 +31,7 @@ move_delay = 20  # número de frames para esperar entre movimentos
 
 
 # Apenas para visualizar no terminal
-for row in maze:
+for row in grid:
     print(row)
 
 # Configurações iniciais da tela
@@ -64,8 +59,8 @@ while running:
                 new_y = player_y + dy
 
                 # Verifica se está dentro dos limites da matriz
-                if 0 <= new_y < len(maze) and 0 <= new_x < len(maze[0]):
-                    if maze[new_y][new_x] == 0:
+                if 0 <= new_y < len(grid) and 0 <= new_x < len(grid[0]):
+                    if maze.is_walkable(new_x, new_y):
                         player_x, player_y = new_x, new_y
                 break  # só permite um movimento por vez
 
@@ -77,7 +72,7 @@ while running:
     # ----- Desenha o labirinto -----
     block_size = 40  # Tamanho do quadrado (em pixels)
 
-    for y, row in enumerate(maze):
+    for y, row in enumerate(grid):
         for x, cell in enumerate(row):
             if cell == 1:
                 pygame.draw.rect(
@@ -131,8 +126,8 @@ while running:
             new_x = daughter_x + dx
             new_y = daughter_y + dy
 
-            if 0 <= new_y < len(maze) and 0 <= new_x < len(maze[0]):
-                if maze[new_y][new_x] == 0 and (new_x != player_x or new_y != player_y):
+            if 0 <= new_y < len(grid) and 0 <= new_x < len(grid[0]):
+                if maze.is_walkable(new_x,new_y) and (new_x != player_x or new_y != player_y):
                     daughter_x, daughter_y = new_x, new_y
                     break
 
