@@ -29,11 +29,11 @@ Este projeto tem como objetivo:
 
 ### Mundo 1: O Começo do Labirinto
 *“Lis fugiu rindo! Hora de sair do sofá e encarar o labirinto.”*
-- [ ] Criar o mapa base com paredes e caminhos (matriz ou `.txt`)
-- [ ] Mostrar o labirinto na tela com blocos desenhados
-- [ ] Controlar o pai com teclas (setas ou WASD)
-- [ ] Impedir que ele atravesse paredes
-- [ ] Mostrar a posição da filha no mapa  
+- [x] Criar o mapa base com paredes e caminhos (matriz ou `.txt`)
+- [x] Mostrar o labirinto na tela com blocos desenhados
+- [x] Controlar o pai com teclas (setas ou WASD)
+- [x] Impedir que ele atravesse paredes
+- [x] Mostrar a posição da filha no mapa  
 **Conquista desbloqueada:** `Primeiros passos do papai`
 
 ---
